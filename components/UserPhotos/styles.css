@@ -1,0 +1,38 @@
+.userphotos-root {
+  padding: 12px;
+}
+
+.userphotos-title {
+  margin-bottom: 12px;
+}
+
+.userphotos-card {
+  margin-bottom: 16px;
+}
+
+.userphotos-image {
+  max-height: 420px;
+  object-fit: cover;
+}
+
+.userphotos-divider {
+  margin: 8px 0 12px;
+}
+
+.userphotos-comments-title {
+  margin-bottom: 6px;
+}
+
+.userphotos-comments {
+  padding-left: 8px;
+}
+
+.userphotos-comment-date {
+  color: #666;
+}
+
+.userphotos-loading {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}

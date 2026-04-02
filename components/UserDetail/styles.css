@@ -1,0 +1,25 @@
+.userdetail-root {
+  padding: 12px;
+}
+
+.userdetail-name {
+  margin-bottom: 8px;
+}
+
+.userdetail-divider {
+  margin: 8px 0 16px;
+}
+
+.userdetail-description {
+  margin-top: 8px;
+}
+
+.userdetail-photos-button {
+  margin-top: 16px;
+}
+
+.userdetail-loading {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}

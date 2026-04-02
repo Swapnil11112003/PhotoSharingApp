@@ -1,4 +1,12 @@
-.topbar-appBar{
-  height: 60;
-  justify-content: "center";
+.topbar-appBar {
+  height: 60px;
+  justify-content: center;
+}
+
+.topbar-toolbar {
+  min-height: 60px;
+}
+
+.topbar-spacer {
+  flex: 1 1 auto;
 }

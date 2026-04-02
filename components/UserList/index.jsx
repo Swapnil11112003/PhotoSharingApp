@@ -1,47 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  CircularProgress,
   Divider,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
   Typography,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import api from '../../lib/api';
 
 import './styles.css';
 
 function UserList() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    api.get('/user/list')
+      .then((response) => {
+        if (!isMounted) return;
+        setUsers(response.data || []);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setUsers([]);
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
-    <div>
-      <Typography variant="body1">
-        This is the user list, which takes up 3/12 of the window. You might
-        choose to use
-        {' '}
-        <a href="https://mui.com/components/lists/" rel="noreferrer" target="_blank">Lists</a>
-        {' '}
-        and
-        {' '}
-        <a href="https://mui.com/components/dividers/" rel="noreferrer" target="_blank">Dividers</a>
-        {' '}
-        to
-        display your users like so:
+    <div className="userlist-root">
+      <Typography variant="h6" className="userlist-title">
+        Users
       </Typography>
-      <List component="nav">
-        <ListItem>
-          <ListItemText primary="Item #1" />
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <ListItemText primary="Item #2" />
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <ListItemText primary="Item #3" />
-        </ListItem>
-        <Divider />
-      </List>
-      <Typography variant="body1">
-        The model comes in from API: /user/list
-      </Typography>
+      {loading ? (
+        <div className="userlist-loading">
+          <CircularProgress size={24} />
+        </div>
+      ) : (
+        <List component="nav" dense>
+          {users.length === 0 ? (
+            <ListItem>
+              <ListItemText primary="No users found." />
+            </ListItem>
+          ) : (
+            users.map((user, index) => (
+              <React.Fragment key={user._id}>
+                <ListItem disablePadding>
+                  <ListItemButton component={RouterLink} to={`/users/${user._id}`}>
+                    <ListItemText primary={`${user.first_name} ${user.last_name}`} />
+                  </ListItemButton>
+                </ListItem>
+                {index < users.length - 1 && <Divider />}
+              </React.Fragment>
+            ))
+          )}
+        </List>
+      )}
     </div>
   );
 }
